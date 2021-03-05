@@ -1,0 +1,27 @@
+
+# Activate venv: 
+  # $ . venv/bin/activate
+
+# To create this document, from within the environment:
+  # $ pip freeze > requirements.txt
+
+cachelib==0.1.1
+click==7.1.2
+Flask==1.1.2
+Flask-Session==0.3.2
+itsdangerous==1.1.0
+Jinja2==2.11.3
+MarkupSafe==1.1.1
+Werkzeug==1.0.1
+
+
+# To create a v-env, from within the project folder,
+  # $ python3 -m venv venv
+
+# To use this document to install dependencies, from within a v-env:
+  # $ pip install -r requirements.txt
+
+# To run flask, from within the environment
+  # export FLASK_APP=application.py
+  # export FLASK_ENV=development
+  # flask run

@@ -1,0 +1,27 @@
+{% extends "template.html" %}
+
+{% block title %}
+Welcöme
+{% endblock %}
+
+{% block main %}
+<div class="background-image">
+    <div
+        class="container-fluid intro d-flex flex-column align-items-center">
+        <div class="text-center">
+            <p class="h1">A beautifully simple way to keep track of
+                the little things.</p>
+        </div>
+        <div class="form-group mt-5 pt-5">
+            <a href="{{ url_for('login') }}"><input
+                    class="width-logout btn btn-dark mx-3 p-3"
+                    type="submit" name="login" value="Login"></a>
+            <a href="{{ url_for('register') }}"><input
+                    class="width-logout btn btn-dark mx-3 p-3"
+                    type="submit" name="register"
+                    value="Register"></a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

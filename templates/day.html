@@ -1,0 +1,21 @@
+{% extends "template.html" %}
+
+{% block title %}
+Töday
+{% endblock %}
+
+{% block main %}
+<div
+  class="container-fluid intro d-flex flex-column align-items-center">
+  <div class="text-center h1">
+    {{ dayname }}
+  </div>
+  <div class="text-center">
+    {{ date }}
+  </div>
+  <table></table>
+</div>
+
+
+
+{% endblock %}
