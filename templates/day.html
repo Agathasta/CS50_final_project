@@ -5,35 +5,56 @@ Töday
 {% endblock %}
 
 {% block main %}
-<div
-  class="container-fluid d-flex flex-column align-items-center pt-5">
+<div class="container-fluid d-flex flex-column align-items-center pt-5">
   <div class="text-center h1">
     {{ dayname }}
   </div>
   <div class="text-center">
     {{ date }}
   </div>
-  <div class="container p-4 d-flex flex-column align-items-center">
+  <div class="p-4 d-inline-flex flex-column align-items-center">
     <form action="/" method="post">
-      <input type="text" class="form-control-plaintext table"
-        id="todo" placeholder="Enter TöDö" name="todo">
+      <input type="text" class="form-control-plaintext list-row" placeholder="Enter TöDö" name="new_todo">
     </form>
-
-    <div id="day-list"></div>
   </div>
+  <div class="p-4 d-inline-flex flex-column align-items-center" id="day-list"></div>
+
 
 </div>
 
 <script>
-  // List all pending todos
+  // List all pending todos as forms
   let dayList = document.getElementById('day-list');
   let todos = JSON.parse('{{ todos | safe }}');
 
   for (var i = 0; i < todos.length; i++) {
-    let newTodo = document.createElement('p');
-    newTodo.className = "table";
-    newTodo.innerHTML = todos[i].todo;
-    dayList.appendChild(newTodo);
+    let row = document.createElement('div');
+    row.className = "d-inline-flex justify-content-between list-row";
+
+    let listItem = document.createElement('p');
+    listItem.innerHTML = todos[i].todo;
+
+    let listForm = document.createElement('form');
+    listForm.setAttribute("method", "get");
+    listForm.setAttribute("action", "/");
+
+    let listFormItem = document.createElement('input');
+    listFormItem.setAttribute("type", "text");
+    listFormItem.setAttribute("value", todos[i].todo);
+    listFormItem.setAttribute("hidden", true);
+    listFormItem.setAttribute("name", "todo")
+
+    listForm.appendChild(listFormItem);
+
+    let close = document.createElement("input");
+    close.setAttribute("type", "submit");
+    close.setAttribute("value", "\u00D7");
+    close.className = "close";
+    listForm.appendChild(close);
+
+    row.appendChild(listItem);
+    row.appendChild(listForm);
+    dayList.appendChild(row);
   };
 
 </script>

@@ -37,7 +37,7 @@ def index():
 
     if request.method == "POST":
 
-        todo = request.form.get("todo")
+        todo = request.form.get("new_todo")
 
         # Ensure a ToDo was written
         if not todo:
@@ -46,11 +46,17 @@ def index():
 
         with sqlite3.connect("todos.db") as conn:
             conn.execute("INSERT INTO todos (user_id, todo, status, date) VALUES(?, ?, ?, ?)",
-                       (user, todo, "Not done", now))
+                       (user, todo, "Pending", now))
         return redirect("/")
 
     else:
         with sqlite3.connect("todos.db") as conn:
+
+            if "todo" in request.args:
+                todo = request.args['todo']
+                conn.execute("DELETE FROM todos WHERE user_id = ? AND todo = ?", (user, todo))
+                return redirect("/")
+            
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM todos WHERE user_id = ?", (user,))
