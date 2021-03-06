@@ -16,7 +16,8 @@
   <!-- https://favicon.io/emoji-favicons/money-mouth-face/ -->
   <link href="/static/favicon.ico" rel="icon">
 
-  <link href="/static/css/style.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/style.css') }}"
+    rel="stylesheet">
 
   <!-- http://getbootstrap.com/docs/4.5/ -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -91,7 +92,7 @@
   </footer>
 
   <script type="text/javascript"
-    src="../static/js/script.js"></script>
+    src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 
 </html>

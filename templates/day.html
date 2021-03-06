@@ -5,25 +5,30 @@ Töday
 {% endblock %}
 
 {% block main %}
-<div class="container-fluid d-flex flex-column align-items-center pt-5">
-  <div class="text-center h1">
+<div
+  class="container-fluid d-flex flex-column align-items-center mt-5">
+
+  <div class="h1 pt-5">
     {{ dayname }}
   </div>
-  <div class="text-center">
+  <div class="mb-3">
     {{ date }}
   </div>
-  <div class="p-4 d-inline-flex flex-column align-items-center">
-    <form action="/" method="post">
-      <input type="text" class="form-control-plaintext list-row" placeholder="Enter TöDö" name="new_todo">
-    </form>
-  </div>
-  <div class="p-4 d-inline-flex flex-column align-items-center" id="day-list"></div>
 
+  <div class="pt-4 d-inline-flex flex-column align-items-center"
+    id="day-list">
+    <!-- List of ToDos created with JS -->
+  </div>
+
+  <form action="/" method="post">
+    <input type="text" class="form-control-plaintext list-row"
+      placeholder="enter TöDö" autofocus name="new_todo">
+  </form>
 
 </div>
 
 <script>
-  // List all pending todos as forms
+  // List all pending todos
   let dayList = document.getElementById('day-list');
   let todos = JSON.parse('{{ todos | safe }}');
 
@@ -33,10 +38,12 @@ Töday
 
     let listItem = document.createElement('p');
     listItem.innerHTML = todos[i].todo;
+    // listItem.setAttribute("hidden", true);
 
     let listForm = document.createElement('form');
     listForm.setAttribute("method", "get");
     listForm.setAttribute("action", "/");
+    listForm.className = "form";
 
     let listFormItem = document.createElement('input');
     listFormItem.setAttribute("type", "text");
@@ -51,6 +58,12 @@ Töday
     close.setAttribute("value", "\u00D7");
     close.className = "close";
     listForm.appendChild(close);
+
+    // let edit = document.createElement("input");
+    // edit.setAttribute("type", "submit");
+    // edit.setAttribute("value", "\u00D7");
+    // edit.className = "close";
+    // listForm.appendChild(edit);
 
     row.appendChild(listItem);
     row.appendChild(listForm);

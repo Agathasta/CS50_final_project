@@ -1,7 +1,3 @@
-* {
-  box-sizing: border-box;
-}
-
 /* solve the problem with the fixed nav-bar */
 body { padding-top: 65px; }
 
@@ -38,19 +34,21 @@ body { padding-top: 65px; }
 }
 
 /* HOMEPAGE */
+p, .form {
+  margin-bottom: .4rem; /* override Bootstrap, default is 1rem */
+  margin-top: .4rem;  /* override Bootstrap, default is 0 */
+}
 .list-row {
   border-bottom: .5px solid rgb(175, 175, 175);
   width: 20rem;
-  padding: 0;
-  margin: 0;
   outline: none;
-
 }
 
 .close {
-  border: .5px solid rgb(175, 175, 175);
+  border: 0 solid white;
   padding: 0;
   margin: 0;
+  background-color: white;
 }
 
 #day-list p.checked {
