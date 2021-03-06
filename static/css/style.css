@@ -1,6 +1,7 @@
 /* solve the problem with the fixed nav-bar */
 body { padding-top: 65px; }
 
+/* LOGIN */
 .background-image {
   background-image: url("../images/IMG_4335.jpeg");
   background-position: center center;
@@ -32,3 +33,10 @@ body { padding-top: 65px; }
   }
 }
 
+/* HOMEPAGE */
+.table {
+  border-bottom: .5px solid rgb(175, 175, 175);
+  width: 20rem;
+  padding: .4rem 0;
+  margin: 0;
+}

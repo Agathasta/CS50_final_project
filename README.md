@@ -38,3 +38,6 @@ For my final project I wanted to do a TODO list (I know, I know). I don't like a
     * To check if conditions are met, and if they aren't, stay on the same page and flash a warning.
 
     Status: at this point I am good 10 hours into the project, including this documentation.
+
+5. SQL connected to JS through Flask
+    This was hard. I had no idea where to start and in which direction to go. Right now I am grabbing the HTML input with Flask and inserting into the database (POST). For GET, Flask sends a JSON to JavaScript, and JS modifies the HTML.

@@ -6,15 +6,37 @@ Töday
 
 {% block main %}
 <div
-  class="container-fluid intro d-flex flex-column align-items-center">
+  class="container-fluid d-flex flex-column align-items-center pt-5">
   <div class="text-center h1">
     {{ dayname }}
   </div>
   <div class="text-center">
     {{ date }}
   </div>
-  <table></table>
+  <div class="container p-4 d-flex flex-column align-items-center">
+    <form action="/" method="post">
+      <input type="text" class="form-control-plaintext table"
+        id="todo" placeholder="Enter TöDö" name="todo">
+    </form>
+
+    <div id="day-list"></div>
+  </div>
+
 </div>
+
+<script>
+  // List all pending todos
+  let dayList = document.getElementById('day-list');
+  let todos = JSON.parse('{{ todos | safe }}');
+
+  for (var i = 0; i < todos.length; i++) {
+    let newTodo = document.createElement('p');
+    newTodo.className = "table";
+    newTodo.innerHTML = todos[i].todo;
+    dayList.appendChild(newTodo);
+  };
+
+</script>
 
 
 

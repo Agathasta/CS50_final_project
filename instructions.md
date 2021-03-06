@@ -14,6 +14,8 @@ To create a v-env, from within the project folder,
 To use this document to install dependencies, from within a v-env:
   $ pip install -r requirements.txt
 
+  ------------------------------------------------
+
 To run flask, from within the environment
   export FLASK_APP=application.py
   export FLASK_ENV=development
@@ -34,5 +36,5 @@ _cursor.execute('SELECT * FROM users WHERE user = ?', (user,))_
 _cursor.execute('SELECT * FROM users WHERE user = ?', \[user])_
 * select returns an object. To select one row, use fetchone(); if no row is found it returns None
 _row = cursor.fetchone()_
-* return the value of a key (column)
+* return the value of a key (column) in one row (so, if more rows, iterate over them)
 _return row\['id']_
