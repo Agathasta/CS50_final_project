@@ -3,7 +3,7 @@
 Activate venv:
   $ . venv/bin/activate
 
-To create this document, from within the environment:
+To create requirements document, from within the environment:
   $ pip freeze > requirements.txt
 
   ------------------------------------------------

@@ -1,17 +1,47 @@
-import os
+# import os
 
-import sqlite3
-import datetime
-from flask import Flask, flash, json, redirect, render_template, request, session
+# import sqlite3
+from datetime import datetime
+from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
+from flask_sqlalchemy import SQLAlchemy
 from tempfile import mkdtemp
 # from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from helpers import login_required, apology
 
-# Configure application
+# Configure application and db
 app = Flask(__name__)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///remember.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+class Users(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(40), unique=True, nullable=False)
+    password = db.Column(db.String(120), unique=True, nullable=False)
+
+    def __repr__(self):
+        return '<Users %r>' % self.username
+
+
+class Todos(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    todo = db.Column(db.String(80), nullable=False)
+    date = db.Column(db.DateTime, nullable=False,
+        default=datetime.utcnow)
+    status = db.Column(db.Boolean)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
+        nullable=False)
+    user = db.relationship('Users',
+        backref=db.backref('todos', lazy=True))
+
+    def __repr__(self):
+        return '<Todos %r>' % self.todo
+
 
 # Ensure templates are auto-reloaded *** FROM CS50 ***
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -29,41 +59,8 @@ def index():
     """Show homepage"""
 
     user = session.get("user_id")
-
-    # Get current date
-    now = datetime.datetime.now()
-    dayname = now.strftime("%A").upper()
-    date = now.strftime("%B %d, %Y").upper()
-
-    if request.method == "POST":
-
-        todo = request.form.get("new_todo")
-
-        # Ensure a ToDo was written
-        if not todo:
-            flash("What do you have tö dö?")
-            return redirect("/")
-
-        with sqlite3.connect("todos.db") as conn:
-            conn.execute("INSERT INTO todos (user_id, todo, status, date) VALUES(?, ?, ?, ?)",
-                       (user, todo, "Pending", now))
-        return redirect("/")
-
-    else:
-        with sqlite3.connect("todos.db") as conn:
-
-            if "todo" in request.args:
-                todo = request.args['todo']
-                conn.execute("DELETE FROM todos WHERE user_id = ? AND todo = ?", (user, todo))
-                return redirect("/")
-            
-            conn.row_factory = sqlite3.Row
-            cursor = conn.cursor()
-            cursor.execute("SELECT * FROM todos WHERE user_id = ?", (user,))
-            rows = cursor.fetchall()
-            todos = json.dumps( [dict(row) for row in rows] )
-
-        return render_template("day.html", user=user, dayname=dayname, date=date, todos=todos)
+    
+    return "Hello World"
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -84,17 +81,13 @@ def login():
             return render_template("login.html")
 
         # Query database for existing username & matching password
-        with sqlite3.connect("todos.db") as conn:
-            conn.row_factory = sqlite3.Row
-            cursor = conn.cursor()
-            cursor.execute("SELECT * FROM users WHERE username = ?", (name,))
-            row = cursor.fetchone()
-            if row == None or not check_password_hash(row["hash"], password):
-                flash("Invalid username and/or password")
-                return render_template("login.html")
+        user = Users.query.filter_by(username=name).first()
+        if user == None or not check_password_hash(user.password, password):
+            flash("Invalid username and/or password")
+            return render_template("login.html")
         
         # Remember which user has logged in
-        session["user_id"] = row["id"]
+        session["user_id"] = user.id
 
         # Redirect user to home page
         return redirect("/")
@@ -122,23 +115,26 @@ def register():
             return render_template("register.html")
 
         elif password != request.form.get("confirmation"):
-                flash("Passwords must match")
-                return render_template("register.html")
+            flash("Passwords must match")
+            return render_template("register.html")
 
         # Query database for existing username
-        with sqlite3.connect("todos.db") as conn:
-            cursor = conn.cursor()
-            cursor.execute("SELECT * FROM users WHERE username = ?", (name,))
-            row = cursor.fetchone()
-            if row != None:
-                flash("Username already exists")
-                return render_template("register.html")            
+        user = Users.query.filter_by(username=name).first()
+        if user != None:
+            flash("Username already exists")
+            return render_template("register.html")            
 
     	# Generate hash and add user to db
-        hash = generate_password_hash(password)
-        with sqlite3.connect("todos.db") as conn:
-            cursor = conn.cursor()
-            cursor.execute("INSERT INTO users (username, hash) VALUES(?, ?)", (name, hash))
+        password = generate_password_hash(password)
+
+        new_user = Users(username=name, password=password)
+        db.session.add(new_user)
+        db.session.commit()
+
+        # Automatically log in
+        user = Users.query.filter_by(username=name).first()
+        session["user_id"] = user.id
+
         return redirect("/")
 
     else:
@@ -155,5 +151,7 @@ def logout():
     # Redirect user to login form
 	return render_template("logout.html")
 
+
 if __name__ == "__application__":
+    db.create_all()
     app.run(debug=True)

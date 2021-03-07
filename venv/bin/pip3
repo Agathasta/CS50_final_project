@@ -1,4 +1,4 @@
-#!/Users/ana/Desktop/final_project/venv/bin/python3
+#!/Users/ana/Documents/GitHub/CS50_final_project/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
