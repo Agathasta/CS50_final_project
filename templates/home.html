@@ -5,8 +5,7 @@ Töday
 {% endblock %}
 
 {% block main %}
-<div
-  class="container-fluid d-flex flex-column align-items-center mt-5">
+<div class="container-fluid d-flex flex-column align-items-center mt-5">
 
   <!-- <div class="h1 pt-5">
     {{ dayname }}
@@ -28,17 +27,12 @@ Töday
   <div class="pt-4 d-inline-flex flex-column align-items-center">
     {% for todo in todo_list %}
 
-    <div class="d-inline-flex justify-content-between list-row form"
-      id="row">
-      <a class="nostyle {{'checked' if todo['done']}}"
-        href="/check/{{ todo.id }}">{{ todo.todo }}</a>
+    <div class="d-inline-flex justify-content-between list-row form" id="row">
+      <a class="nostyle {{'checked' if todo['done']}}" href="/check/{{ todo.id }}">{{ todo.todo }}</a>
       <div>
-        <a class="nostyle hidden" href="/repeat/{{ todo.id }}"><i
-            class="bi bi-arrow-repeat"></i></a>
-        <a class="nostyle hidden" href="/edit/{{ todo.id }}"><i
-            class="bi bi-pencil"></i></a>
-        <a class="nostyle hidden" href="/delete/{{ todo.id }}"><i
-            class="bi bi-trash"></i></a>
+        <a class="nostyle hidden" href="/repeat/{{ todo.id }}"><i class="bi bi-arrow-repeat"></i></a>
+        <a class="nostyle hidden" href="/edit/{{ todo.id }}"><i class="bi bi-pencil"></i></a>
+        <a class="nostyle hidden" href="/delete/{{ todo.id }}"><i class="bi bi-trash"></i></a>
       </div>
 
     </div>
@@ -47,8 +41,7 @@ Töday
   </div>
 
   <form action="/add" method="post">
-    <input class="form-control-plaintext list-row" type="text"
-      name="todo" autofocus>
+    <input class="form-control-plaintext list-row" type="text" name="todo" autofocus>
   </form>
 
 </div>
@@ -64,7 +57,7 @@ Töday
 
   let formatted_date = `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
   document.getElementById('date').innerHTML = formatted_date.toUpperCase();
-
+  // document.getElementById('date').value = formatted_date.toUpperCase();
 
 
 </script>

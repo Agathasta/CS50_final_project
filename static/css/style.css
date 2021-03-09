@@ -1,7 +1,7 @@
 /* solve the problem with the fixed nav-bar */
 body { padding-top: 65px; }
 
-/* make font-sizes responsive */
+/* make font-sizes responsive
 html {
   font-size: 1rem;
 }
@@ -22,7 +22,7 @@ html {
   html {
     font-size: 1.6rem;
   }
-}
+} */
 
 /* LOGIN */
 .background-image {

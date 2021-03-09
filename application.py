@@ -61,15 +61,9 @@ def home():
                 todo.date = now
         db.session.commit()
 
-        todo_list = Todos.query.filter_by(user_id=user_id, date=now).all()
+        todo_list = Todos.query.filter_by(user_id=user_id, date=now).order_by(Todos.done).all()
     
         return render_template("home.html", todo_list=todo_list, now=now)
-
-    else:
-        date = request.form.get("date") # None!!!
-        todo_list = Todos.query.filter_by(user_id=user_id, date=date).all()
-
-        return render_template("home.html", todo_list=todo_list, date=date)
 
 
 @app.route("/add", methods=["GET", "POST"])
