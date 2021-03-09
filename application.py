@@ -1,8 +1,8 @@
 # import os
 
 # import sqlite3
-from datetime import datetime
-from flask import Flask, flash, redirect, render_template, request, session
+from datetime import datetime, date
+from flask import Flask, flash, redirect, render_template, request, session, url_for
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from tempfile import mkdtemp
@@ -20,27 +20,19 @@ db = SQLAlchemy(app)
 
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(40), unique=True, nullable=False)
-    password = db.Column(db.String(120), unique=True, nullable=False)
-
-    def __repr__(self):
-        return '<Users %r>' % self.username
-
+    username = db.Column(db.String(40), nullable=False)
+    password = db.Column(db.String(120), nullable=False)
+    todos = db.relationship('Todos', backref='user', lazy=True)
 
 class Todos(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     todo = db.Column(db.String(80), nullable=False)
-    date = db.Column(db.DateTime, nullable=False,
-        default=datetime.utcnow)
-    status = db.Column(db.Boolean)
+    date = db.Column(db.Date, nullable=False,
+        default=datetime.now().date())
+    done = db.Column(db.Boolean)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
         nullable=False)
-    user = db.relationship('Users',
-        backref=db.backref('todos', lazy=True))
-
-    def __repr__(self):
-        return '<Todos %r>' % self.todo
 
 
 # Ensure templates are auto-reloaded *** FROM CS50 ***
@@ -55,12 +47,70 @@ Session(app)
 
 @app.route("/", methods=["GET", "POST"])
 @login_required
-def index():
+def home():
     """Show homepage"""
 
-    user = session.get("user_id")
+    user_id = session.get("user_id")
+
+    if request.method == "GET":
+        now = datetime.now().date() # now = 2021-03-08
+
+        todos = Todos.query.filter_by(user_id=user_id, done=False).all()
+        for todo in todos:
+            if todo.date < now:
+                todo.date = now
+        db.session.commit()
+
+        todo_list = Todos.query.filter_by(user_id=user_id, date=now).all()
     
-    return "Hello World"
+        return render_template("home.html", todo_list=todo_list, now=now)
+
+    else:
+        date = request.form.get("date") # None!!!
+        todo_list = Todos.query.filter_by(user_id=user_id, date=date).all()
+
+        return render_template("home.html", todo_list=todo_list, date=date)
+
+
+@app.route("/add", methods=["GET", "POST"])
+@login_required
+def add():
+    """Add ToDo"""
+
+    # Get data to put in the new ToDo
+    todo = request.form.get("todo")
+    now = datetime.now().date()
+    user_id = session.get("user_id")
+
+    # Add the new ToDo
+    new_todo = Todos(todo=todo, date=now, done=False, user_id=user_id)
+    db.session.add(new_todo)
+    db.session.commit()
+
+    return redirect(url_for("home"))
+
+@app.route("/delete/<int:todo_id>")
+@login_required
+def delete(todo_id):
+    """Delete todo"""
+
+    todo = Todos.query.filter_by(id=todo_id).first()
+    db.session.delete(todo)
+    db.session.commit()
+
+    return redirect(url_for("home"))
+
+
+@app.route("/check/<int:todo_id>")
+@login_required
+def check(todo_id):
+    """Check/Uncheck ToDo"""
+
+    todo = Todos.query.filter_by(id=todo_id).first()
+    todo.done = not todo.done
+    db.session.commit()
+
+    return redirect(url_for("home"))
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -90,7 +140,7 @@ def login():
         session["user_id"] = user.id
 
         # Redirect user to home page
-        return redirect("/")
+        return redirect(url_for("home"))
 
     else:
         return render_template("login.html")
@@ -135,15 +185,15 @@ def register():
         user = Users.query.filter_by(username=name).first()
         session["user_id"] = user.id
 
-        return redirect("/")
+        return redirect(url_for("home"))
 
     else:
         return render_template("register.html")
 
 
-@app.route("/logout")
+@app.route("/welcome")
 def logout():
-	"""Log user out"""
+	"""Greet logged out user"""
 
 	# Forget any user_id  *** FROM CS50 ***
 	session.clear()

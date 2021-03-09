@@ -1,0 +1,72 @@
+{% extends "template.html" %}
+
+{% block title %}
+Töday
+{% endblock %}
+
+{% block main %}
+<div
+  class="container-fluid d-flex flex-column align-items-center mt-5">
+
+  <!-- <div class="h1 pt-5">
+    {{ dayname }}
+  </div>
+  <div class="mb-3">
+    {{ date }}
+  </div> -->
+
+  <!-- Display day name -->
+  <p class="display-4 pt-3" id="day"></p>
+
+  <!-- Display editable date -->
+  <p class="mb-3" id="date"></p>
+  <!-- <form action="/" method="post">
+    <input class="mb-3" type="text" id="date" value="">
+  </form> -->
+
+  {{ date }}
+  <div class="pt-4 d-inline-flex flex-column align-items-center">
+    {% for todo in todo_list %}
+
+    <div class="d-inline-flex justify-content-between list-row form"
+      id="row">
+      <a class="nostyle {{'checked' if todo['done']}}"
+        href="/check/{{ todo.id }}">{{ todo.todo }}</a>
+      <div>
+        <a class="nostyle hidden" href="/repeat/{{ todo.id }}"><i
+            class="bi bi-arrow-repeat"></i></a>
+        <a class="nostyle hidden" href="/edit/{{ todo.id }}"><i
+            class="bi bi-pencil"></i></a>
+        <a class="nostyle hidden" href="/delete/{{ todo.id }}"><i
+            class="bi bi-trash"></i></a>
+      </div>
+
+    </div>
+
+    {% endfor %}
+  </div>
+
+  <form action="/add" method="post">
+    <input class="form-control-plaintext list-row" type="text"
+      name="todo" autofocus>
+  </form>
+
+</div>
+
+
+
+<script>
+  let d = new Date();
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+  document.getElementById('day').innerHTML = days[d.getDay()].toUpperCase();
+
+  let formatted_date = `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+  document.getElementById('date').innerHTML = formatted_date.toUpperCase();
+
+
+
+</script>
+
+{% endblock %}

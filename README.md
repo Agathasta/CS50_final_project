@@ -4,7 +4,7 @@
 CS50x Final Project
 -------------------
 
-For my final project I wanted to do a TODO list (I know, I know). I don't like any of the apps out there - ideally I would like a mixture of a calendar, a task manager and a simple list for not stricly scheduled todos like the [TeuxDeux](https://teuxdeux.com/) app. I'm going to start with the latter, I love its approach (if you like the idea check them out.)
+For my final project I wanted to do a TODO list (I know, I know). I don't like any of the apps out there - ideally I would like a mixture of a calendar, a task manager and a simple list for not stricly scheduled todos like the [TeuxDeux](https://teuxdeux.com/) app. I'm going to start with the latter, I love its approach (and if you like the idea do check them out.)
 
 1. INSTALL DEPENDENCIES
     I thought I would just more or less copy the Finance problem set 9 implementation of register and login and concentrate on the actual ToDos. Ha! Since I'm not using the CS50 IDE, it took me hours to find out what I needed and install it (sigh).
@@ -19,9 +19,9 @@ For my final project I wanted to do a TODO list (I know, I know). I don't like a
 
     What I learned:
     * to make a connection application -> database
-    * to access fields by column name
     * selecting expects a tuple as value, so it needs parenthesis and a comma after the name (or square brackets and no comma)
-    * selecting returns an object: select one row with fetchone() (if no row is found it returns None), and the value of a key (column) with _return row\['id']_
+    * selecting returns an object: select one row with fetchone() (if no row is found it returns None)
+    * to access fields by column name (_return row\['id']_)
 
 3. CSS
     Next I started fighting with Bootstrap, starting to give what I had a look.
@@ -40,4 +40,19 @@ For my final project I wanted to do a TODO list (I know, I know). I don't like a
     Status: at this point I am good 10 hours into the project, including this documentation.
 
 5. SQL connected to JS through Flask
-    This was hard. I had no idea where to start and in which direction to go. Right now I am grabbing the HTML input with Flask and inserting into the database (POST). For GET, Flask sends a JSON to JavaScript, and JS modifies the HTML.
+    This was hard. I had no idea where to start and in which direction to go. Right now I am grabbing the HTML input with Flask and inserting into the database (POST). For GET, Flask sends a JSON to JavaScript, and JS modifies the HTML creating a list of ToDos.
+
+6. START FROM ZERO!!!
+    This was getting more and more complicated. I had the following working: a display of ToDos and the possibility of adding ToDos (see above). I was deleting from the DB with GET, sending the ToDo to be deleted through an URL, and then having JS display all ToDos again. The whole thing worked (and looked good) but it was getting monstruous, and I was stumped trying to edit or cross out ToDos...
+    So I googled again, and found a wonderful simple Flask ToDo list from [PythonEngineer](https://www.python-engineer.com/posts/flask-todo-app/) that gave me the push to rethink everything (well, obvioulsly not everything, but everything I have tried in the past two days).
+
+7. Installing SQLAlquemy
+    And the first thing I did was swallow my pride at having my raw SQL queries working and give SQLALchemy a chance. I have spent the morning reading documentation, and have adapted my register and login queries in about 5 minutes. I tell myself than knowing what a connection and a cursor is will make my future brighter....... Sigh.
+
+    What I learned:
+    * What an ORM is (kind of, at least)
+    * To create a db, tables, relationships
+    * To query said db
+    * To be awed at the clarity of the results. Goodby tuples!!!
+
+    Status: at this point I am over 24 hours into the project... Lots of time spent trying things out, googling, making tiny steps, retracing them. I have to discipline myself to make more and longer breaks. But hey, I am feeling confident again :)
