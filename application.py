@@ -9,7 +9,7 @@ from tempfile import mkdtemp
 # from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helpers import login_required, apology
+from helpers import login_required
 
 # Configure application and db
 app = Flask(__name__)
@@ -52,18 +52,17 @@ def home():
 
     user_id = session.get("user_id")
 
-    if request.method == "GET":
-        now = datetime.now().date() # now = 2021-03-08
+    date = datetime.now().date() # now = 2021-03-08
 
-        todos = Todos.query.filter_by(user_id=user_id, done=False).all()
-        for todo in todos:
-            if todo.date < now:
-                todo.date = now
-        db.session.commit()
+    todos = Todos.query.filter_by(user_id=user_id, done=False).all()
+    for todo in todos:
+        if todo.date < date:
+            todo.date = date
+    db.session.commit()
 
-        todo_list = Todos.query.filter_by(user_id=user_id, date=now).order_by(Todos.done).all()
+    todo_list = Todos.query.filter_by(user_id=user_id, date=date).order_by(Todos.done).all()
     
-        return render_template("home.html", todo_list=todo_list, now=now)
+    return render_template("home.html", todo_list=todo_list)
 
 
 @app.route("/add", methods=["GET", "POST"])

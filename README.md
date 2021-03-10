@@ -1,8 +1,7 @@
-****** TöDös ******
-===================
+# One Place: centralize ToDos - Appointments - Jobs - Birthdays - Lists // v.1.0
+## CS50x Final Project
 
-CS50x Final Project
--------------------
+[Video Demo](https://youtu.be/2DKeyi2YDGA)
 
 For my final project I wanted to do a TODO list (I know, I know). I don't like any of the apps out there - ideally I would like a mixture of a calendar, a task manager and a simple list for not stricly scheduled todos like the [TeuxDeux](https://teuxdeux.com/) app. I'm going to start with the latter, I love its approach (and if you like the idea do check them out.)
 
@@ -44,7 +43,7 @@ For my final project I wanted to do a TODO list (I know, I know). I don't like a
 
 6. START FROM ZERO!!!
     This was getting more and more complicated. I had the following working: a display of ToDos and the possibility of adding ToDos (see above). I was deleting from the DB with GET, sending the ToDo to be deleted through an URL, and then having JS display all ToDos again. The whole thing worked (and looked good) but it was getting monstruous, and I was stumped trying to edit or cross out ToDos...
-    So I googled again, and found a wonderful simple Flask ToDo list from [PythonEngineer](https://www.python-engineer.com/posts/flask-todo-app/) that gave me the push to rethink everything (well, obvioulsly not everything, but everything I have tried in the past two days).
+    So I googled again, and found a wonderful simple Flask ToDo app that gave me the push to rethink everything (well, obvioulsly not everything, but everything I have tried in the past two days).
 
 7. Installing SQLAlquemy
     And the first thing I did was swallow my pride at having my raw SQL queries working and give SQLALchemy a chance. I have spent the morning reading documentation, and have adapted my register and login queries in about 5 minutes. I tell myself than knowing what a connection and a cursor is will make my future brighter....... Sigh.
@@ -55,4 +54,18 @@ For my final project I wanted to do a TODO list (I know, I know). I don't like a
     * To query said db
     * To be awed at the clarity of the results. Goodby tuples!!!
 
-    Status: at this point I am over 24 hours into the project... Lots of time spent trying things out, googling, making tiny steps, retracing them. I have to discipline myself to make more and longer breaks. But hey, I am feeling confident again :)
+    Status: at this point I am over 24 hours into the project... Lots of time spent trying things out, googling, making tiny steps, retracing them. But hey, I am feeling confident again :)
+
+8. Reduce expectations and call it a day (for now)
+    Well... I must be at around 40-45 hours and I am frustrated. I know frustration is part of it, but I am missing way too much knowledge: I started this with no clue of Python or Flask or SQLAlchemy or JS, and I have decided that I am going to leave it at this for the moment.
+    I spent ages trying to change the day for which I was seeing the ToDos, I tried the HTML date input, but Flask wouldn't recognize the input (None was its stubborn answer), I tried setting the default date with JS, sending the input with jQuery AJAX so as not to reload the page, I tried modalsk... I don't even remember the millon of things I tried. After that, I couldn't let the user update a ToDo, but I think (I hope) that's just because I'm blocked and need a pause. So I am submitting as it is, I will continue it, but after learning some more: jQuery and AJAX have been a wall, and at some point I felt like when you spin around too often and then cannot even make the smallest step straight.
+
+    I do like what I have done until now, I still like my original app idea, and I have learned a ton! :)
+
+THANKS TO:
+- [CS50x](https://cs50.harvard.edu/college/2021/spring/)
+- [PythonEngineer](https://www.python-engineer.com/posts/flask-todo-app/)
+- [Rapid Python](https://rapidpython.com/build-application-using-python-flask-heroku-tailwind/)
+- [opensource](https://opensource.com/article/18/4/flask)
+- [w3schools](https://www.w3schools.com)
+And all the people out there writing documentation, sharing knowledge and answering questions!!!

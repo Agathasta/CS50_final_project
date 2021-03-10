@@ -1,15 +1,15 @@
 # ****** INSTRUCTIONS ******
 
+To create a v-env, from within the project folder,
+  $ python3 -m venv venv
+
 Activate venv:
   $ . venv/bin/activate
 
-To create requirements document, from within the environment:
-  $ pip freeze > requirements.txt
-
   ------------------------------------------------
 
-To create a v-env, from within the project folder,
-  $ python3 -m venv venv
+To create requirements document, from within the environment:
+  $ pip freeze > requirements.txt
 
 To use this document to install dependencies, from within a v-env:
   $ pip install -r requirements.txt
