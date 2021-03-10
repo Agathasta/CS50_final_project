@@ -5,26 +5,21 @@ Register
 {% endblock %}
 
 {% block main %}
-<div
-    class="container-fluid intro d-flex flex-column align-items-center">
-    <p class="h1">REGISTER</p>
+<div class="container-fluid d-flex flex-column align-items-center content">
+    <p class="h1 sans-serif blue pb-2">REGISTER</p>
     <form action="/register" method="post">
         <div class="form-group ">
-            <input autocomplete="off" autofocus
-                class="form-control width-login" name="username"
+            <input autocomplete="off" autofocus class="form-control input-login m-3" name="username"
                 placeholder="Username" type="text">
         </div>
         <div class="form-group">
-            <input class="form-control width-login" name="password"
-                placeholder="Password" type="password">
+            <input class="form-control input-login m-3" name="password" placeholder="Password" type="password">
         </div>
         <div class="form-group">
-            <input class="form-control width-login"
-                name="confirmation" placeholder="Confirm Password"
+            <input class="form-control input-login m-3" name="confirmation" placeholder="Confirm Password"
                 type="password">
         </div>
-        <button class="btn btn-dark p-2 width-login"
-            type="submit">Let's dö this</button>
+        <button class="btn btn-dark input-login m-3 p-2" type="submit">Enter</button>
     </form>
 </div>
 {% endblock %}
