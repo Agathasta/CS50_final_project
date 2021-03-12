@@ -60,14 +60,25 @@ For my final project I wanted to do a TODO list (I know, I know). I don't like a
 
 8. Reduce expectations and call it a day (for now)  
     Well... I must be at around 40-45 hours and I am frustrated. I know frustration is part of it, but I am missing way too much knowledge: I started this with no clue of Python or Flask or SQLAlchemy or JS, and I have decided that I am going to leave it at this for the moment.  
-    I spent ages trying to change the day for which I was seeing the ToDos, I tried the HTML date input, but Flask wouldn't recognize the input (None was its stubborn answer), I tried setting the default date with JS, sending the input with jQuery AJAX so as not to reload the page, I tried modalsk... I don't even remember the millon of things I tried. After that, I couldn't let the user update a ToDo, but I think (I hope) that's just because I'm blocked and need a pause. So I am submitting as it is, I will continue it, but after learning some more: jQuery and AJAX have been a wall, and at some point I felt like when you spin around too often and then cannot even make the smallest step straight.  
+    I spent ages trying to change the day for which I was seeing the ToDos, I tried the HTML date input, but Flask wouldn't recognize the input (None was its stubborn answer), I tried setting the default date with JS, sending the input with jQuery AJAX so as not to reload the page, I tried modals... I don't even remember the millon of things I tried. I think (I hope) it's just because I'm blocked and need a pause. I feel like when you spin around too often and then cannot even make the smallest step straight.  
   
     I do like what I have done until now, I still like my original app idea, and I have learned a ton! :)  
-  
+
+9. DATE CHANGE
+    Of course, a couple of hours after submitting here I am, happily overcoming those alpine heights I was just whining about (eyeroll).
+    The  user can now change the date, and the appropiate ToDos will show and work as expected, ToDos can be added, checked and deleted. Missing only the beauty details, like deciding what to do with the input field. I cannot believe  how blocked I was :/  
+
+    What I learned:
+    * Optional arguments to URLs are possible.
+    * A session can be used for things that need to be moved around, like the date.
+    * Converting strings to dates and dates to strings, although I suspect I managed to make that work by sheer luck.
+
 THANKS TO:  
-- [CS50x](https://cs50.harvard.edu/college/2021/spring/)
-- [PythonEngineer](https://www.python-engineer.com/posts/flask-todo-app/)
-- [Rapid Python](https://rapidpython.com/build-application-using-python-flask-heroku-tailwind/)
-- [opensource](https://opensource.com/article/18/4/flask)
-- [w3schools](https://www.w3schools.com)  
+
+* [CS50x](https://cs50.harvard.edu/college/2021/spring/)
+* [PythonEngineer](https://www.python-engineer.com/posts/flask-todo-app/)
+* [Rapid Python](https://rapidpython.com/build-application-using-python-flask-heroku-tailwind/)
+* [opensource](https://opensource.com/article/18/4/flask)
+* [w3schools](https://www.w3schools.com)  
+
 And all the people out there writing documentation, sharing knowledge and answering questions!!!

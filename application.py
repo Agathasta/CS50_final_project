@@ -44,66 +44,70 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
+now = datetime.now().strftime("%Y-%m-%d")
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/")
+@app.route("/<date>")
 @login_required
-def home():
+def home(date=now):
     """Show homepage"""
 
     user_id = session.get("user_id")
+    date = datetime.strptime(date, '%Y-%m-%d').date()
+    session["date"]=date
 
-    date = datetime.now().date() # now = 2021-03-08
-
-    todos = Todos.query.filter_by(user_id=user_id, done=False).all()
-    for todo in todos:
-        if todo.date < date:
-            todo.date = date
-    db.session.commit()
+    if date == now:
+        todos = Todos.query.filter_by(user_id=user_id, done=False).all()
+        for todo in todos:
+            if todo.date < date:
+                todo.date = date
+        db.session.commit()
 
     todo_list = Todos.query.filter_by(user_id=user_id, date=date).order_by(Todos.done).all()
     
-    return render_template("home.html", todo_list=todo_list)
+    return render_template("home.html", todo_list=todo_list, date=date)
+        
 
-
-@app.route("/add", methods=["GET", "POST"])
+@app.route("/add", methods=["POST"])
 @login_required
 def add():
     """Add ToDo"""
 
     # Get data to put in the new ToDo
     todo = request.form.get("todo")
-    now = datetime.now().date()
+    date = session.get("date")
     user_id = session.get("user_id")
 
     # Add the new ToDo
-    new_todo = Todos(todo=todo, date=now, done=False, user_id=user_id)
+    new_todo = Todos(todo=todo, date=date, done=False, user_id=user_id)
     db.session.add(new_todo)
     db.session.commit()
 
-    return redirect(url_for("home"))
+    return redirect(url_for("home", date=date))
 
-@app.route("/delete/<int:todo_id>")
+
+@app.route("/delete/<int:todo_id>/<date>")
 @login_required
-def delete(todo_id):
+def delete(todo_id, date):
     """Delete todo"""
 
     todo = Todos.query.filter_by(id=todo_id).first()
     db.session.delete(todo)
     db.session.commit()
 
-    return redirect(url_for("home"))
+    return redirect(url_for("home", date=date))
 
 
-@app.route("/check/<int:todo_id>")
+@app.route("/check/<int:todo_id>/<date>")
 @login_required
-def check(todo_id):
+def check(todo_id, date):
     """Check/Uncheck ToDo"""
 
     todo = Todos.query.filter_by(id=todo_id).first()
     todo.done = not todo.done
     db.session.commit()
 
-    return redirect(url_for("home"))
+    return redirect(url_for("home", date=date))
 
 
 @app.route("/login", methods=["GET", "POST"])

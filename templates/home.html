@@ -11,8 +11,12 @@ ToDos
   <!-- Display day name -->
   <p class="h1 sans-serif blue pb-2" id="day"></p>
 
-  <!-- Display editable date -->
-  <p class="h5 sans-serif mb-3" id="date"></p>
+  <!-- Display date & editable date -->
+  <p class="h5 sans-serif mb-3" id="date-f"></p>
+  <form onchange="window.location = '/' + date.value; return false;">
+    <input class="h5 sans-serif mb-3" id="date" type="date"
+      value="{{ date }}">
+  </form>
 
 
   <div class="d-inline-flex flex-column align-items-center pt-4">
@@ -22,14 +26,13 @@ ToDos
       id="row">
 
       <a class="nostyle {{'checked' if todo['done']}} serif"
-        href="/check/{{ todo.id }}">{{ todo.todo }}</a>
+        href="/check/{{ todo.id }}/{{ date }}">{{ todo.todo }}</a>
 
       <div class="hidden {{'checked' if todo['done']}}">
         <!-- <a class="nostyle" href="/repeat/{{ todo.id }}"><i class="bi bi-arrow-repeat"></i></a>
         <a class="nostyle" href="/edit/{{ todo.id }}"><i class="bi bi-pencil"></i></a> -->
-        <a class="nostyle" href="/delete/{{ todo.id }}"><i
+        <a class="nostyle" href="/delete/{{ todo.id }}/{{ date }}"><i
             class="bi bi-trash"></i></a>
-
       </div>
 
     </div>
@@ -40,21 +43,23 @@ ToDos
   <form action="/add" method="post">
     <input class="form-control-plaintext list-row serif" type="text"
       name="todo" autofocus>
+    <input class="hidden" id="date_h" type="date" value="{{ date }}">
+    <input class="hidden" type="submit" value="submit" />
   </form>
 
 </div>
 
 
-
 <script>
-  let d = new Date();
+  let d = new Date(document.getElementById('date').value);
+
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   document.getElementById('day').innerHTML = days[d.getDay()].toUpperCase();
 
   let formatted_date = `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
-  document.getElementById('date').innerHTML = formatted_date.toUpperCase();
+  document.getElementById('date-f').innerHTML = formatted_date.toUpperCase();
 
 </script>
 
