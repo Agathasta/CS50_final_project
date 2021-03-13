@@ -1,6 +1,6 @@
 /* solve the problem with the fixed nav-bar */
-body { 
-  padding-top: 65px; 
+.alert { 
+  padding-top: 75px; 
 }
 
 @media (max-width: 768px) {
@@ -86,8 +86,28 @@ a.nostyle:link, a.nostyle:visited {
 }
 
 .hidden {
-  visibility: hidden;
+  /* visibility: hidden; */
+  display: none;
 }
 #row:hover .hidden {
-  visibility: visible;
+  /* visibility: visible; */
+  display: inline;
+}
+
+.bottom {
+  grid-template-columns: 1fr; 
+  display: grid; 
+}
+.top {
+  grid-area: 1 / 1;
+  border: 0;
+  background: white;
+}
+#date-f {
+  z-index: 9;
+  cursor: pointer;
+}
+#date:focus {
+  border: 0;
+  outline: none;
 }

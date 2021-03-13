@@ -66,12 +66,14 @@ For my final project I wanted to do a TODO list (I know, I know). I don't like a
 
 9. DATE CHANGE
     Of course, a couple of hours after submitting here I am, happily overcoming those alpine heights I was just whining about (eyeroll).
-    The  user can now change the date, and the appropiate ToDos will show and work as expected, ToDos can be added, checked and deleted. Missing only the beauty details, like deciding what to do with the input field. I cannot believe  how blocked I was :/  
+    The  user can now change the date, and the appropiate ToDos will show and work as expected, ToDos can be added, checked and deleted. I cannot believe  how blocked I was :/ 
+    I managed next to stack both dates, to click on one and show the other, to go back to formated string when clicking outside. The only thing I cannot make work is to automatically open the calendar when I trigger the event. I am very happy with the clean result. 
 
     What I learned:
     * Optional arguments to URLs are possible.
     * A session can be used for things that need to be moved around, like the date.
     * Converting strings to dates and dates to strings, although I suspect I managed to make that work by sheer luck.
+    * To toggle the visibility of objects with JS, to stack elements with CSS.
 
 THANKS TO:  
 

@@ -44,6 +44,7 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
+# Convert current date to a string to be used as a default by "/<date>"
 now = datetime.now().strftime("%Y-%m-%d")
 
 @app.route("/")
@@ -53,9 +54,14 @@ def home(date=now):
     """Show homepage"""
 
     user_id = session.get("user_id")
-    date = datetime.strptime(date, '%Y-%m-%d').date()
-    session["date"]=date
 
+    # Transform date string into a date object
+    date = datetime.strptime(date, '%Y-%m-%d').date()
+
+    # Save date in a session to be able to move it around
+    session["date"] = date
+
+    # Move date of ToDo to current day if not done
     if date == now:
         todos = Todos.query.filter_by(user_id=user_id, done=False).all()
         for todo in todos:
@@ -122,7 +128,6 @@ def login():
         name = request.form.get("username")
         password = request.form.get("password")
 
-        # Ensure username and password are submitted
         if not name or not password:
             flash("You must provide a username and a password")
             return render_template("login.html")
@@ -133,10 +138,9 @@ def login():
             flash("Invalid username and/or password")
             return render_template("login.html")
         
-        # Remember which user has logged in
+        # Remember the logged-in user
         session["user_id"] = user.id
 
-        # Redirect user to home page
         return redirect(url_for("home"))
 
     else:
@@ -152,7 +156,6 @@ def register():
         name = request.form.get("username")
         password = request.form.get("password")
 
-        # Ensure username and password were submitted, user doesn't exist, and same password was typed twice
         if not name:
             flash("You must provide a valid username")
             return render_template("register.html")

@@ -1,4 +1,4 @@
-{% extends "template.html" %}
+{% extends "z_base.html" %}
 
 {% block title %}
 Welcome
@@ -6,14 +6,19 @@ Welcome
 
 {% block main %}
 <div class="background-image">
-    <div class="container-fluid d-flex flex-column align-items-center content">
-        <p class="h5 sans-serif mb-3">ToDos - Appointments - Jobs - Birthdays - Lists</p>
+    <div
+        class="container-fluid d-flex flex-column align-items-center content">
+        <p class="h5 sans-serif mb-3">ToDos - Appointments - Jobs -
+            Birthdays - Lists</p>
         <p class="h1 sans-serif">All in One Place</p>
         <div class="form-group mt-5">
-            <a href="{{ url_for('login') }}"><input class="btn-logout btn btn-dark mx-3 p-3" type="submit" name="login"
-                    value="Login"></a>
-            <a href="{{ url_for('register') }}"><input class="btn-logout btn btn-dark mx-3 p-3" type="submit"
-                    name="register" value="Register"></a>
+            <a href="{{ url_for('login') }}"><input
+                    class="btn-logout btn btn-dark mx-3 p-3"
+                    type="submit" name="login" value="Login"></a>
+            <a href="{{ url_for('register') }}"><input
+                    class="btn-logout btn btn-dark mx-3 p-3"
+                    type="submit" name="register"
+                    value="Register"></a>
         </div>
     </div>
 </div>

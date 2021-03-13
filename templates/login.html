@@ -1,21 +1,26 @@
-{% extends "template.html" %}
+{% extends "z_navbar.html" %}
 
 {% block title %}
 Log In
 {% endblock %}
 
 {% block main %}
-<div class="container-fluid d-flex flex-column align-items-center content">
+<div
+    class="container-fluid d-flex flex-column align-items-center content">
     <p class="h1 sans-serif blue pb-2">LOG IN</p>
     <form action="/login" method="post">
         <div class="form-group">
-            <input autocomplete="off" autofocus class="form-control input-login m-3" name="username"
+            <input autocomplete="off" autofocus
+                class="form-control input-login m-3" name="username"
                 placeholder="Username" type="text">
         </div>
         <div class="form-group">
-            <input class="form-control input-login m-3" name="password" placeholder="Password" type="password">
+            <input class="form-control input-login m-3"
+                name="password" placeholder="Password"
+                type="password">
         </div>
-        <button class="btn btn-dark input-login m-3 p-2" type="submit">Enter</button>
+        <button class="btn btn-dark input-login m-3 p-2"
+            type="submit">Enter</button>
     </form>
 </div>
 {% endblock %}

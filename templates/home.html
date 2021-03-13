@@ -1,38 +1,43 @@
-{% extends "template.html" %}
+{% extends "z_navbar.html" %}
 
 {% block title %}
 ToDos
 {% endblock %}
 
 {% block main %}
-<div
-  class="container-fluid d-flex flex-column align-items-center content">
+<div class="container-fluid d-flex flex-column align-items-center content">
 
   <!-- Display day name -->
   <p class="h1 sans-serif blue pb-2" id="day"></p>
 
-  <!-- Display date & editable date -->
-  <p class="h5 sans-serif mb-3" id="date-f"></p>
-  <form onchange="window.location = '/' + date.value; return false;">
-    <input class="h5 sans-serif mb-3" id="date" type="date"
-      value="{{ date }}">
-  </form>
+  <!-- Display editable date -->
+  <div class="d-inline-flex align-items-baseline">
+    <div class="bottom">
 
+      <p class="h5 sans-serif top" id="date-f" onclick="calendar()"></p>
 
+      <form onchange="window.location = '/' + date.value; return false;" class="top">
+        <input class="h5 sans-serif" id="date" type="date" value="{{ date }}" required="">
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Display ToDo list -->
   <div class="d-inline-flex flex-column align-items-center pt-4">
     {% for todo in todo_list %}
 
-    <div class="d-inline-flex justify-content-between list-row"
-      id="row">
+    <div class="d-inline-flex justify-content-between list-row" id="row">
 
-      <a class="nostyle {{'checked' if todo['done']}} serif"
-        href="/check/{{ todo.id }}/{{ date }}">{{ todo.todo }}</a>
+      <!-- Show & check ToDO - GET -->
+      <a class="nostyle {{'checked' if todo['done']}} serif" href="/check/{{ todo.id }}/{{ date }}">{{ todo.todo }}</a>
 
       <div class="hidden {{'checked' if todo['done']}}">
-        <!-- <a class="nostyle" href="/repeat/{{ todo.id }}"><i class="bi bi-arrow-repeat"></i></a>
-        <a class="nostyle" href="/edit/{{ todo.id }}"><i class="bi bi-pencil"></i></a> -->
-        <a class="nostyle" href="/delete/{{ todo.id }}/{{ date }}"><i
-            class="bi bi-trash"></i></a>
+        <!-- <a class="nostyle" href="/repeat/{{ todo.id }}"><i class="bi bi-arrow-repeat"></i></a> -->
+        <!-- <a class="nostyle" href="/edit/{{ todo.id }}"><i class="bi bi-pencil"></i></a> -->
+
+        <!-- Delete ToDo - GET -->
+        <a class="nostyle" href="/delete/{{ todo.id }}/{{ date }}"><i class="bi bi-trash"></i></a>
       </div>
 
     </div>
@@ -40,9 +45,9 @@ ToDos
     {% endfor %}
   </div>
 
+  <!-- Add ToDo - POST -->
   <form action="/add" method="post">
-    <input class="form-control-plaintext list-row serif" type="text"
-      name="todo" autofocus>
+    <input class="form-control-plaintext list-row serif" type="text" name="todo" autofocus>
     <input class="hidden" id="date_h" type="date" value="{{ date }}">
     <input class="hidden" type="submit" value="submit" />
   </form>
@@ -51,7 +56,8 @@ ToDos
 
 
 <script>
-  let d = new Date(document.getElementById('date').value);
+  let date = document.getElementById('date')
+  let d = new Date(date.value);
 
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -60,6 +66,34 @@ ToDos
 
   let formatted_date = `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
   document.getElementById('date-f').innerHTML = formatted_date.toUpperCase();
+
+
+  // Show date-picker
+  let date_f = document.getElementById('date-f')
+
+  date_f.style.display = 'inline';
+  function calendar() {
+    console.log(window.getComputedStyle(date, null).getPropertyValue("display"));
+    if (date_f.style.display = 'inline') {
+      date_f.style.display = 'none';
+      date.focus();
+    } else {
+      date_f.style.display = 'inline';
+    }
+  }
+  // Hide date-picker if clicked outside
+  document.addEventListener('click', function (event) {
+    let calendar = document.querySelector('.bottom');
+    let target = event.target;  // clicked element
+
+    do {
+      if (target == calendar) {
+        return;
+      }
+      target = target.parentNode;
+    } while (target);
+    date_f.style.display = 'inline';
+  });
 
 </script>
 
